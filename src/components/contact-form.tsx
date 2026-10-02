@@ -13,7 +13,13 @@ import { btnPrimary } from "@/components/site";
 const field =
   "w-full rounded-xl border border-input bg-background/60 px-4 py-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:glow-ring [&_option]:bg-card [&_option]:text-foreground";
 
-function mailtoHref(f: Omit<ContactFormData, "website">) {
+function mailtoHref(f: {
+  name: string;
+  email: string;
+  interest: string;
+  opportunity: string;
+  message: string;
+}) {
   const subject = `Portfolio contact — ${f.opportunity} · ${f.interest}`;
   const body = [
     `Name: ${f.name}`,
