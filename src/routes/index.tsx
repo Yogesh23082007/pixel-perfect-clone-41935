@@ -3,6 +3,7 @@ import { ArrowRight, Download, ExternalLink, Github, GraduationCap, Award, MapPi
 import photo from "@/assets/yogesh.jpg.asset.json";
 import { contact, projects, skills } from "@/lib/portfolio";
 import { Navbar, Footer, Socials, useReveal, btnPrimary, btnGhost } from "@/components/site";
+import { ContactForm } from "@/components/contact-form";
 
 export const Route = createFileRoute("/")({
   head: () => ({
