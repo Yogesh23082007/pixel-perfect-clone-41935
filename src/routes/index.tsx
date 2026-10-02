@@ -190,14 +190,20 @@ function Index() {
         <section id="contact" className="mx-auto max-w-6xl px-5 py-24">
           <Heading n="06" title="Let's Connect" />
           <div className="reveal glass rounded-3xl p-8 md:p-12">
-            <p className="text-3xl font-bold">Let's build something together.</p>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              I am currently looking for internship opportunities where I can learn, contribute, and gain real-world experience. If you're looking for an
-              enthusiastic CS student interested in Python, AI/ML, Data Science, or software development, I'd love to connect.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a href={`mailto:${contact.email}`} className={btnPrimary}>{contact.email}</a>
-              <Socials />
+            <div className="grid gap-10 md:grid-cols-[1fr_1.25fr]">
+              <div>
+                <p className="text-3xl font-bold">Let's build something together.</p>
+                <p className="mt-4 text-muted-foreground">
+                  I am currently looking for internship opportunities where I can learn, contribute,
+                  and gain real-world experience. Fill in the form and I'll get back to you — or
+                  reach me directly through any of these.
+                </p>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <a href={`mailto:${contact.email}`} className={btnGhost}>{contact.email}</a>
+                  <Socials />
+                </div>
+              </div>
+              <ContactForm />
             </div>
           </div>
         </section>
