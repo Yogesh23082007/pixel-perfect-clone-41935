@@ -1,14 +1,12 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
-import {
-  sendContactMessage,
-  INTERESTS,
-  OPPORTUNITIES,
-  type ContactFormData,
-} from "@/lib/contact.functions";
+import { INTERESTS, OPPORTUNITIES } from "@/lib/contact.functions";
 import { contact } from "@/lib/portfolio";
 import { btnPrimary } from "@/components/site";
+
+// Web3Forms access keys are public by design (they only allow sending to the owner's inbox).
+const WEB3FORMS_KEY = "45b668f3-a7f5-4cff-81be-50fc7bd818b2";
 
 const field =
   "w-full rounded-xl border border-input bg-background/60 px-4 py-3 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:glow-ring [&_option]:bg-card [&_option]:text-foreground";
@@ -66,8 +64,24 @@ export function ContactForm() {
 
     setStatus("sending");
     try {
-      const res = await sendContactMessage({ data: { ...form, website: form.website || undefined } });
-      if (res.delivered) {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Portfolio contact — ${form.opportunity} · ${form.interest}`,
+          from_name: "YOGESH.DEV Portfolio",
+          name: form.name.trim(),
+          email: form.email.trim(),
+          replyto: form.email.trim(),
+          interest: form.interest,
+          opportunity: form.opportunity,
+          message: form.message.trim(),
+          botcheck: "",
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as { success?: boolean };
+      if (res.ok && json.success) {
         setStatus("sent");
       } else {
         window.location.href = mailtoHref(form);
