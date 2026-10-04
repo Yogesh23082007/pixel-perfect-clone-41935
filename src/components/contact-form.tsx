@@ -30,6 +30,12 @@ function mailtoHref(f: {
   return `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+function toFormData(obj: Record<string, string>) {
+  const fd = new FormData();
+  Object.entries(obj).forEach(([k, v]) => fd.append(k, v));
+  return fd;
+}
+
 const emptyForm = {
   name: "",
   email: "",
@@ -66,8 +72,7 @@ export function ContactForm() {
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
+        body: toFormData({
           access_key: WEB3FORMS_KEY,
           subject: `Portfolio contact — ${form.opportunity} · ${form.interest}`,
           from_name: "YOGESH.DEV Portfolio",
